@@ -425,7 +425,7 @@ class App extends Component {
                 }
               </Content>
               {
-                this.renderFooter(logo, footerHtml)
+                // this.renderFooter(logo, footerHtml)
               }
               {
                 this.renderAiAssistant()
@@ -479,7 +479,7 @@ class App extends Component {
                 }}
               />
               {
-                this.renderFooter()
+                // this.renderFooter()
               }
               {
                 this.renderAiAssistant()
