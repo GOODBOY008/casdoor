@@ -1589,7 +1589,7 @@ export function getUserCommonFields() {
 }
 
 export function getDefaultFooterContent() {
-  return ``;
+  return "";
 }
 
 export function getEmptyFooterContent() {

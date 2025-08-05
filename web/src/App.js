@@ -374,19 +374,19 @@ class App extends Component {
   renderPage() {
     if (this.isDoorPages()) {
       let themeData = this.state.themeData;
-      let logo = this.state.logo;
-      let footerHtml = null;
+      // let logo = this.state.logo;
+      // let footerHtml = null;
       if (this.state.organization === undefined) {
         const curCookie = Cookie.parse(document.cookie);
         if (curCookie["organizationTheme"] && curCookie["organizationTheme"] !== "null") {
           themeData = JSON.parse(curCookie["organizationTheme"]);
         }
-        if (curCookie["organizationLogo"] && curCookie["organizationLogo"] !== "") {
-          logo = curCookie["organizationLogo"];
-        }
-        if (curCookie["organizationFootHtml"] && curCookie["organizationFootHtml"] !== "") {
-          footerHtml = curCookie["organizationFootHtml"];
-        }
+        // if (curCookie["organizationLogo"] && curCookie["organizationLogo"] !== "") {
+        //   logo = curCookie["organizationLogo"];
+        // }
+        // if (curCookie["organizationFootHtml"] && curCookie["organizationFootHtml"] !== "") {
+        //   footerHtml = curCookie["organizationFootHtml"];
+        // }
       }
 
       return (
