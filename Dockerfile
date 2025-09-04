@@ -17,25 +17,19 @@ ARG TARGETOS
 ARG TARGETARCH
 ENV BUILDX_ARCH="${TARGETOS:-linux}_${TARGETARCH:-amd64}"
 
-RUN sed -i 's/https/http/' /etc/apk/repositories
-RUN apk add --update sudo
-RUN apk add tzdata
-RUN apk add curl
-RUN apk add ca-certificates && update-ca-certificates
+RUN apk update && apk upgrade && \
+    apk add --no-cache tzdata curl ca-certificates && \
+    update-ca-certificates && \
+    rm -rf /var/cache/apk/
 
-RUN adduser -D $USER -u 1000 \
-    && echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER \
-    && chmod 0440 /etc/sudoers.d/$USER \
-    && mkdir logs \
-    && chown -R $USER:$USER logs
+RUN mkdir logs
 
-USER 1000
 WORKDIR /
-COPY --from=BACK --chown=$USER:$USER /go/src/casdoor/server_${BUILDX_ARCH} ./server
-COPY --from=BACK --chown=$USER:$USER /go/src/casdoor/swagger ./swagger
-COPY --from=BACK --chown=$USER:$USER /go/src/casdoor/conf/app.conf ./conf/app.conf
-COPY --from=BACK --chown=$USER:$USER /go/src/casdoor/version_info.txt ./go/src/casdoor/version_info.txt
-COPY --from=FRONT --chown=$USER:$USER /web/build ./web/build
+COPY --from=BACK /go/src/casdoor/server_${BUILDX_ARCH} ./server
+COPY --from=BACK /go/src/casdoor/swagger ./swagger
+COPY --from=BACK /go/src/casdoor/conf/app.conf ./conf/app.conf
+COPY --from=BACK /go/src/casdoor/version_info.txt ./go/src/casdoor/version_info.txt
+COPY --from=FRONT /web/build ./web/build
 
 ENTRYPOINT ["/server"]
 
